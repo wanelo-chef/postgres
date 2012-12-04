@@ -24,6 +24,7 @@ os_group      = node['postgres']['group']
 service_name  = node['postgres']['service']
 data_dir      = node['postgres']['data_dir']
 bin_dir       = node['postgres']['prefix_dir'].gsub(/%VERSION%/, node['postgres']['version']) + "/bin"
+shell_script  = "/opt/local/share/smf/method/postgres-#{node['postgres']['version']}.sh"
 
 # create postgres user if not already there
 user os_user do
@@ -50,18 +51,24 @@ directory File.dirname(data_dir) do
   owner os_user
 end
 
+directory File.dirname(node['postgres']['log_file']) do
+  recursive true
+  owner os_user
+  group os_group
+end
+
 execute "running initdb for data dir #{data_dir}" do
   command "#{bin_dir}/initdb -D #{data_dir} -E 'UTF8'"
   user os_user
   not_if { File.exists?(data_dir)}
 end
 
-template "/opt/local/share/smf/method/postgres.sh" do
+template shell_script do
   source "postgres-service.sh.erb"
   mode "0700"
   owner os_user
   group os_group
-  #notifies :reload, "service[#{service_name}]"
+  notifies :reload, "service[#{service_name}]"
   variables(
       "bin_dir"  => bin_dir,
       "data_dir" => node['postgres']['data_dir'],
@@ -74,11 +81,10 @@ template "#{data_dir}/pg_hba.conf" do
   owner os_user
   group os_group
   mode "0600"
-  #notifies :reload, "service[#{service_name}]"
+  notifies :reload, "service[#{service_name}]"
   variables('replica' => false, 'connections' => node['postgres']['connections'] )
 end
 
-private_interface = nil
 if node['postgres']['listen_addresses'].empty?
   node['postgres']['listen_interfaces'].each do |interface|
     node.default['postgres']['listen_addresses'] << listen_addr_for(interface)
@@ -94,9 +100,10 @@ template "#{data_dir}/postgresql.conf" do
   owner os_user
   group os_group
   mode "0600"
-  #notifies :reload, "service[#{service_name}]"
+  notifies :reload, "service[#{service_name}]"
   variables config.to_hash.merge('listen_addresses' => node['postgres']['listen_addresses'])
 end
+
 
 #if config['replica']
 #  template "#{data_dir}/recovery.conf" do
@@ -108,27 +115,23 @@ end
 #    variables params
 #  end
 #end
-#
-#service service_name do
-#  supports :status => true, :restart => true, :reload => true
-#  action [ :enable, :start ]
-#end
-#
-#ruby_block "wait for postgres to start up on first run" do
-#  block do
-#    sleep 15
-#  end
-#  not_if { node['postgresql']['enabled'] }
-#end
-#
-#execute "set postgres password" do
-#  command %Q(#{config['bin_dir']}/psql -U postgres -c "alter user postgres with password '#{config['password']}'")
-#  only_if { config["password"] }
-#end
-#
-#ruby_block "save postgresql enabled state for next chef run" do
-#  block do
-#    node.set['postgresql']['enabled'] = true
-#  end
-#end
-#
+
+smf service_name do
+  user os_user
+  group os_group
+  start_command "#{shell_script} start"
+  stop_command "#{shell_script} stop"
+  refresh_command "#{shell_script} refresh"
+  start_timeout 60
+  stop_timeout 60
+  refresh_timeout 60
+
+  environment(
+      "LD_PRELOAD_32" => "/usr/lib/extendedFILE.so.1"
+  )
+end
+
+service service_name do
+  supports :status => true, :restart => true, :reload => true
+  action [ :enable, :start ]
+end

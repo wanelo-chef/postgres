@@ -3,6 +3,8 @@ default['postgres']['user']                    = "postgres"
 default['postgres']['group']                   = "postgres"
 default['postgres']['service']                 = "postgres"
 default['postgres']['data_dir']                = "/var/pgsql/data"
+# Do not use a globally-used directory such as /var/log, as ownership is changed
+# to allow writing by the postgres user
 default['postgres']['log_file']                = "/var/log/postgres/stderr.log"
 default['postgres']['prefix_dir']              = "/opt/local/postgres-%VERSION%"
 default['postgres']['version']                 = "9.2.1"
