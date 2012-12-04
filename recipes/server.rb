@@ -74,7 +74,7 @@ directory File.dirname(node['postgres']['log_file']) do
 end
 
 execute "running initdb for data dir #{data_dir}" do
-  command "#{bin_dir}/initdb -D #{data_dir} -E 'UTF8'"
+  command "#{bin_dir}/initdb -D #{data_dir} -E 'UTF8' --locale='en_US.UTF-8'"
   user os_user
   not_if { File.exists?(data_dir)}
 end
