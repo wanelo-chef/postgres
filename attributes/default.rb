@@ -2,15 +2,18 @@
 default['postgres']['user']                    = "postgres"
 default['postgres']['group']                   = "postgres"
 default['postgres']['service']                 = "postgres"
-default['postgres']['data_dir']                = "/var/pgsql/data"
+                                                # VERSION_ABBR is the major/minor version, ie 92 for 9.2.1
+                                                # Patch version changes in PG are binary swappable
+default['postgres']['data_dir']                = "/var/pgsql/data%VERSION_ABBR%"
 # Do not use a globally-used directory such as /var/log, as ownership is changed
 # to allow writing by the postgres user
-default['postgres']['log_file']                = "/var/log/postgres/stderr.log"
+default['postgres']['log_file']                = "/var/log/postgres-%VERSION%/stderr.log"
 default['postgres']['prefix_dir']              = "/opt/local/postgres-%VERSION%"
-default['postgres']['version']                 = "9.2.1"
+default['postgres']['version']                 = "9.2.2"
 default['postgres']['remote_tar']              = "http://ftp.postgresql.org/pub/source/v%VERSION%/postgresql-%VERSION%.tar.gz"
 
-default['postgres']['encoding']                = "en_US.UTF-8"
+default['postgres']['config']['encoding']                = "UTF8"
+default['postgres']['config']['locale']                  = "en_US.UTF-8"
 
 default['postgres']['config']['stats_temp_directory']       = "/tmp/pg_stats_temp_directory"
 
@@ -38,7 +41,7 @@ default['postgres']['config']['random_page_cost']        = 2.0 # tuned for Smart
 default['postgres']['config']['log_min_duration_statement_ms'] = 50
 default['postgres']['config']['log_destination']         = 'stderr'
 # suggested prefix for pgfouine compatibility (not yet verified)
-default['postgres']['config']['log_line_prefix']         = '%t [%p]: [%l-1] user=%u,db=%d '
+default['postgres']['config']['log_line_prefix']         = ''
 
 # Replication
 # Setting this to 'on' allows standby replicas to run read only queries

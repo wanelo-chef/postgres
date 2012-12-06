@@ -34,13 +34,17 @@ end
 node.default['postgres']['config']['shared_buffers_mb'] = (available_ram * 0.25).to_i
 node.default['postgres']['config']['effective_cache_size_mb'] = (available_ram * 0.7).to_i
 
+version       = node['postgres']['version']                # eg 9.2.1
+version_abbr  = version.split('.').slice(0..1).join        # eg 92
+
 config        = node['postgres']['config']
 os_user       = node['postgres']['user']
 os_group      = node['postgres']['group']
 service_name  = node['postgres']['service']
-data_dir      = node['postgres']['data_dir']
-bin_dir       = node['postgres']['prefix_dir'].gsub(/%VERSION%/, node['postgres']['version']) + "/bin"
-shell_script  = "/opt/local/share/smf/method/postgres-#{node['postgres']['version']}.sh"
+data_dir      = node['postgres']['data_dir'].gsub(/%VERSION_ABBR%/, version_abbr)
+log_file      = node['postgres']['log_file'].gsub(/%VERSION%/, version)
+bin_dir       = node['postgres']['prefix_dir'].gsub(/%VERSION%/, version) + "/bin"
+shell_script  = "/opt/local/share/smf/method/postgres-#{version}.sh"
 
 # create postgres user if not already there
 user os_user do
@@ -67,14 +71,14 @@ directory File.dirname(data_dir) do
   owner os_user
 end
 
-directory File.dirname(node['postgres']['log_file']) do
+directory File.dirname(log_file) do
   recursive true
   owner os_user
   group os_group
 end
 
 execute "running initdb for data dir #{data_dir}" do
-  command "#{bin_dir}/initdb -D #{data_dir} -E 'UTF8' --locale='en_US.UTF-8'"
+  command "#{bin_dir}/initdb -D #{data_dir} -E '#{config['encoding']}' --locale='#{config['locale']}'"
   user os_user
   not_if { File.exists?(data_dir)}
 end
@@ -87,8 +91,8 @@ template shell_script do
   notifies :reload, "service[#{service_name}]"
   variables(
       "bin_dir"  => bin_dir,
-      "data_dir" => node['postgres']['data_dir'],
-      "log_file" => node['postgres']['log_file']
+      "data_dir" => data_dir,
+      "log_file" => log_file
   )
 end
 
@@ -141,10 +145,6 @@ smf service_name do
   start_timeout 60
   stop_timeout 60
   refresh_timeout 60
-
-  environment(
-      "LD_PRELOAD_32" => "/usr/lib/extendedFILE.so.1"
-  )
 end
 
 service service_name do

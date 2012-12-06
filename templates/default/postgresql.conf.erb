@@ -133,7 +133,7 @@ maintenance_work_mem = <%= @maintenance_work_mem_mb %>MB            # min 1MB
 
 #max_files_per_process = 1000           # min 25
                                         # (change requires restart)
-#shared_preload_libraries = ''          # (change requires restart)
+shared_preload_libraries = '$libdir/pg_stat_statements'          # (change requires restart)
 
 # - Cost-Based Vacuum Delay -
 
@@ -513,9 +513,9 @@ timezone = 'PST8PDT'
 # These settings are initialized by initdb, but they can be changed.
 lc_messages = 'C'                       # locale for system error message
                                         # strings
-lc_monetary = '<%= @encoding %>'             # locale for monetary formatting
-lc_numeric = '<%= @encoding %>'              # locale for number formatting
-lc_time = '<%= @encoding %>'                 # locale for time formatting
+lc_monetary = '<%= @locale %>'             # locale for monetary formatting
+lc_numeric = '<%= @locale %>'              # locale for number formatting
+lc_time = '<%= @locale %>'                 # locale for time formatting
 
 # default configuration for text search
 default_text_search_config = 'pg_catalog.english'

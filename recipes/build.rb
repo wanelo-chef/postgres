@@ -47,6 +47,5 @@ bash "install postgres from source" do
   not_if "ls -1 #{bin_dir}/postgres"
 end
 
-include_recipe "postgres::pg_upgrade"
-include_recipe "postgres::pgbench"
+include_recipe "postgres::contrib"
 
