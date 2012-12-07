@@ -13,7 +13,7 @@ Additionally, scalability parameters are adjusted to be suitable
 for high-performance PostgreSQL installation.  
 
 Streaming replication is automatically enabled on the master, but 
-wal\_segments may need to be increased depending on the write load.
+wal_segments may need to be increased depending on the write load.
 
 ## Requirements
 
