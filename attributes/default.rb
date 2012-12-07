@@ -2,8 +2,8 @@
 default['postgres']['user']                    = "postgres"
 default['postgres']['group']                   = "postgres"
 default['postgres']['service']                 = "postgres"
-                                                # VERSION_ABBR is the major/minor version, ie 92 for 9.2.1
-                                                # Patch version changes in PG are binary swappable
+                                               # VERSION_ABBR is the major/minor version, ie 92 for 9.2.1
+                                               # Patch version changes in PG are binary swappable
 default['postgres']['data_dir']                = "/var/pgsql/data%VERSION_ABBR%"
 # Do not use a globally-used directory such as /var/log, as ownership is changed
 # to allow writing by the postgres user
@@ -12,8 +12,8 @@ default['postgres']['prefix_dir']              = "/opt/local/postgres-%VERSION%"
 default['postgres']['version']                 = "9.2.2"
 default['postgres']['remote_tar']              = "http://ftp.postgresql.org/pub/source/v%VERSION%/postgresql-%VERSION%.tar.gz"
 
-default['postgres']['config']['encoding']                = "UTF8"
-default['postgres']['config']['locale']                  = "en_US.UTF-8"
+default['postgres']['config']['encoding']                   = "UTF8"
+default['postgres']['config']['locale']                     = "en_US.UTF-8"
 
 default['postgres']['config']['stats_temp_directory']       = "/tmp/pg_stats_temp_directory"
 
@@ -24,7 +24,7 @@ default['postgres']['config']['effective_cache_size_mb']    = nil
 
 default['postgres']['config']['max_connections']            = 400
 
-default['postgres']['config']['checkpoint_segments']          = 64
+default['postgres']['config']['checkpoint_segments']        = 64
 default['postgres']['config']['checkpoint_completion_target'] = 0.9
 
 # Change this to a larger value to keep more WAL logs. The number of segments defines
