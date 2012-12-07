@@ -41,7 +41,7 @@ case "$1" in
      ;;
 
 'stop')
-     $PGBIN/pg_ctl -D $PGDATA stop
+     $PGBIN/pg_ctl -D $PGDATA stop -m fast
      ;;
 
 'refresh')
