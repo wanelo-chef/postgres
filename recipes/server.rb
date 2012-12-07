@@ -31,8 +31,11 @@ case node['platform']
     available_ram = `prtconf -m`.chomp.to_i
 end
 
-node.default['postgres']['config']['shared_buffers_mb'] = (available_ram * 0.25).to_i
-node.default['postgres']['config']['effective_cache_size_mb'] = (available_ram * 0.7).to_i
+shared_buffers_mb       = [12000, (available_ram * 0.25).to_i].min
+effective_cache_size_mb = (available_ram * 0.95).to_i - shared_buffers_mb
+
+node.default['postgres']['config']['shared_buffers_mb']       = shared_buffers_mb
+node.default['postgres']['config']['effective_cache_size_mb'] = effective_cache_size_mb
 
 version       = node['postgres']['version']                # eg 9.2.1
 version_abbr  = version.split('.').slice(0..1).join        # eg 92
