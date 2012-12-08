@@ -105,7 +105,8 @@ template "#{data_dir}/pg_hba.conf" do
   group os_group
   mode "0600"
   notifies :reload, "service[#{service_name}]"
-  variables('replica' => false, 'connections' => node['postgres']['connections'] )
+  variables('connections' => node['postgres']['connections'],
+            'replication' => node['postgres']['replication']  )
 end
 
 if node['postgres']['listen_addresses'].empty?

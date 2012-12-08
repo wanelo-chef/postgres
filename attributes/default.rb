@@ -58,4 +58,7 @@ default['postgres']['listen_interfaces']                 = ["net1", "lo0"]
 default['postgres']['connections']  = {
     "127.0.0.1/0" => "trust"
 }
+default['postgres']['replication']  = {
+    "127.0.0.1/0" => "trust"
+}
 

@@ -80,7 +80,7 @@ host    all             all             0.0.0.1/0                  md5
 # IPv6 local connections:
 host    all             all             ::1/128                    trust
 
-#<% unless @replica %>
-#host    replication     all             <%= @private_subnet %>     trust
+<%- @replication.each_pair do |subnet, method| %>
+host    replication     all             <%= subnet %>  <%= method %>
 #<% end %>
 
