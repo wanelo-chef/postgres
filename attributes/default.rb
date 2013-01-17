@@ -43,6 +43,11 @@ default['postgres']['config']['log_destination']         = 'stderr'
 # suggested prefix for pgfouine compatibility (not yet verified)
 default['postgres']['config']['log_line_prefix']         = ''
 
+# Increase these if you are able to run daily manual 'vacuum analyze',
+# or keep them at defaults otherwise.
+default['postgres']['config']['autovacuum_vacuum_scale_factor']  = '0.2'  # default is 0.2, 20% of table
+default['postgres']['config']['autovacuum_analyze_scale_factor'] = '0.1'  # default is 0.1, 10% of table
+
 # Replication
 # Setting this to 'on' allows standby replicas to run read only queries
 default['postgres']['config']['max_standby_streaming_delay']   = '30s'

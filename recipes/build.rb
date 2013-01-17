@@ -38,7 +38,7 @@ bash "install postgres from source" do
     tar zxvf #{tarfile}
     cd #{src_dir}
     MAKEFLAGS="-j6" ./configure --prefix=#{prefix_dir} --with-template=solaris \
-        --enable-nls --without-perl --without-python --without-readline \
+        --enable-nls --without-perl --without-python \
         --without-tcl --without-zlib --enable-dtrace --with-openssl \
         --build=x86_64-sun-solaris2.11 --host=x86_64-sun-solaris2.11
     make
