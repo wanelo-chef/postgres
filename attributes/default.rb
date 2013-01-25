@@ -48,6 +48,24 @@ default['postgres']['config']['log_line_prefix']         = ''
 default['postgres']['config']['autovacuum_vacuum_scale_factor']  = '0.2'  # default is 0.2, 20% of table
 default['postgres']['config']['autovacuum_analyze_scale_factor'] = '0.1'  # default is 0.1, 10% of table
 
+# async writes settings
+# ---------------------------------------------------------------------------------------------------------------------
+default['postgres']['config']['wall_buffers']       = '-1'     # set to 32MB for more buffering
+default['postgres']['config']['wall_writer_delay']  = '200ms'  # can be up to 32MB
+
+# When off, there can be a delay between when success is reported to the client and when the transaction is really
+# guaranteed to be safe against a server crash. (The maximum delay is three times wal_writer_delay.)
+default['postgres']['config']['synchronous_commit'] = 'on'
+
+# A nonzero delay can allow more transactions to be committed with only one flush operation, if system load is high enough
+# that additional transactions become ready to commit within the given interval. But the delay is just wasted if no
+# other transactions become ready to commit.
+default['postgres']['config']['commit_delay']       = 0
+default['postgres']['config']['commit_siblings']    = 5
+
+# ---------------------------------------------------------------------------------------------------------------------
+
+
 # Replication
 # Setting this to 'on' allows standby replicas to run read only queries
 default['postgres']['config']['max_standby_streaming_delay']   = '30s'
