@@ -50,8 +50,8 @@ default['postgres']['config']['autovacuum_analyze_scale_factor'] = '0.1'  # defa
 
 # async writes settings
 # ---------------------------------------------------------------------------------------------------------------------
-default['postgres']['config']['wall_buffers']       = '-1'     # set to 32MB for more buffering
-default['postgres']['config']['wall_writer_delay']  = '200ms'  # can be up to 32MB
+default['postgres']['config']['wal_buffers']       = '-1'     # set to 32MB for more buffering
+default['postgres']['config']['wal_writer_delay']  = '200ms'  # can be up to 32MB
 
 # When off, there can be a delay between when success is reported to the client and when the transaction is really
 # guaranteed to be safe against a server crash. (The maximum delay is three times wal_writer_delay.)
