@@ -468,7 +468,7 @@ autovacuum_max_workers = 3              # max number of autovacuum subprocesses
                                         # analyze
 autovacuum_vacuum_scale_factor = <%= @autovacuum_vacuum_scale_factor %> # fraction of table size before vacuum
 autovacuum_analyze_scale_factor = <%= @autovacuum_analyze_scale_factor %>  # fraction of table size before analyze
-autovacuum_freeze_max_age = 500000000   # maximum XID age before forced vacuum
+autovacuum_freeze_max_age = <%= @autovacuum_freeze_max_age %>  # maximum XID age before forced vacuum
                                         # (change requires restart)
 #autovacuum_vacuum_cost_delay = 20ms    # default vacuum cost delay for
                                         # autovacuum, in milliseconds;
@@ -494,7 +494,7 @@ autovacuum_freeze_max_age = 500000000   # maximum XID age before forced vacuum
 #default_transaction_deferrable = off
 #session_replication_role = 'origin'
 #statement_timeout = 0                  # in milliseconds, 0 is disabled
-vacuum_freeze_min_age = 50000000
+vacuum_freeze_min_age = <%= @vacuum_freeze_min_age %>
 vacuum_freeze_table_age = 500000000
 #bytea_output = 'hex'                   # hex, escape
 #xmlbinary = 'base64'

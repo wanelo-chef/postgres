@@ -48,6 +48,9 @@ default['postgres']['config']['log_line_prefix']         = ''
 default['postgres']['config']['autovacuum_vacuum_scale_factor']  = '0.2'  # default is 0.2, 20% of table
 default['postgres']['config']['autovacuum_analyze_scale_factor'] = '0.1'  # default is 0.1, 10% of table
 
+default['postgres']['config']['autovacuum_freeze_max_age'] = '200000000' # # maximum XID age before forced vacuum (change requires restart)
+default['postgres']['config']['vacuum_freeze_min_age']     = '50000000'
+
 # async writes settings
 # ---------------------------------------------------------------------------------------------------------------------
 default['postgres']['config']['wal_buffers']       = '-1'     # set to 32MB for more buffering
