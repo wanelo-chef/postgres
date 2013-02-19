@@ -9,7 +9,7 @@ default['postgres']['data_dir']                = "/var/pgsql/data%VERSION_ABBR%"
 # to allow writing by the postgres user
 default['postgres']['log_file']                = "/var/log/postgres-%VERSION%/stderr.log"
 default['postgres']['prefix_dir']              = "/opt/local/postgres-%VERSION%"
-default['postgres']['version']                 = "9.2.2"
+default['postgres']['version']                 = "9.2.3"
 default['postgres']['remote_tar']              = "http://ftp.postgresql.org/pub/source/v%VERSION%/postgresql-%VERSION%.tar.gz"
 
 default['postgres']['config']['encoding']                   = "UTF8"
