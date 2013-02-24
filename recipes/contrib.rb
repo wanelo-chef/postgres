@@ -17,38 +17,38 @@
 # limitations under the License.
 #
 
-include_recipe "postgres::build"
+include_recipe 'postgres::build'
 
 version = node['postgres']['version']
 src_dir = "#{Chef::Config['file_cache_path']}/postgresql-#{version}/contrib"
 prefix_dir  = node['postgres']['prefix_dir'].gsub(/%VERSION%/, version)
-bin_dir     = prefix_dir + "/bin"
+bin_dir     = prefix_dir + '/bin'
 
 # pg_upgrade
 
-execute "install pg_upgrade_support" do
+execute 'install pg_upgrade_support' do
   cwd "#{src_dir}/pg_upgrade_support"
-  command "make && make install"
+  command 'make && make install'
   not_if { File.exists?("#{bin_dir}/pg_upgrade") }
 end
 
-execute "install pg_upgrade" do
+execute 'install pg_upgrade' do
   cwd "#{src_dir}/pg_upgrade"
-  command "make && make install"
+  command 'make && make install'
   not_if { File.exists?("#{bin_dir}/pg_upgrade") }
 end
 
 # pgbench
 
-execute "install pgbench" do
+execute 'install pgbench' do
   cwd "#{src_dir}/pgbench"
-  command "make && make install"
+  command 'make && make install'
   not_if { File.exists?("#{bin_dir}/pgbench") }
 end
 
 # pg_stat_statements
 
-ruby_block "pg_stat_statements info" do
+ruby_block 'pg_stat_statements info' do
   block do
     Chef::Log.info <<-EOL
 
@@ -67,8 +67,8 @@ ruby_block "pg_stat_statements info" do
   not_if { File.exists?("#{prefix_dir}/lib/pg_stat_statements.so") }
 end
 
-execute "install pg_stat_statements" do
+execute 'install pg_stat_statements' do
   cwd "#{src_dir}/pg_stat_statements"
-  command "make && make install"
+  command 'make && make install'
   not_if { File.exists?("#{prefix_dir}/lib/pg_stat_statements.so") }
 end

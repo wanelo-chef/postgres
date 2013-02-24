@@ -31,7 +31,7 @@ remote_file tarfile do
   not_if { File.exist?(tarfile) }
 end
 
-bash "install postgres from source" do
+bash 'install postgres from source' do
   cwd Chef::Config['file_cache_path']
   code <<-EOH
     rm -rf #{src_dir}
@@ -47,5 +47,5 @@ bash "install postgres from source" do
   not_if "ls -1 #{bin_dir}/postgres"
 end
 
-include_recipe "postgres::contrib"
+include_recipe 'postgres::contrib'
 

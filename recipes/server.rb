@@ -24,10 +24,10 @@ def listen_addr_for interface
   interface_node.select { |address, data| data['family'] == 'inet' }[0][0]
 end
 
-include_recipe "postgres::build"
+include_recipe 'postgres::build'
 
 case node['platform']
-  when "smartos"
+  when 'smartos'
     available_ram = `prtconf -m`.chomp.to_i
 end
 
@@ -46,12 +46,12 @@ os_group      = node['postgres']['group']
 service_name  = node['postgres']['service']
 data_dir      = node['postgres']['data_dir'].gsub(/%VERSION_ABBR%/, version_abbr)
 log_file      = node['postgres']['log_file'].gsub(/%VERSION%/, version)
-bin_dir       = node['postgres']['prefix_dir'].gsub(/%VERSION%/, version) + "/bin"
+bin_dir       = node['postgres']['prefix_dir'].gsub(/%VERSION%/, version) + '/bin'
 shell_script  = "/opt/local/share/smf/method/postgres-#{version}.sh"
 
 # create postgres user if not already there
 user os_user do
-  comment "PostgreSQL User"
+  comment 'PostgreSQL User'
   action :create
 end
 
@@ -59,12 +59,12 @@ group os_group do
   action :create
 end
 
-directory config["stats_temp_directory"] do
+directory config['stats_temp_directory'] do
   owner os_user
   group os_group
 end
 
-directory "/opt/local/share/smf/method" do
+directory '/opt/local/share/smf/method' do
   recursive true
   action :create
 end
@@ -87,23 +87,23 @@ execute "running initdb for data dir #{data_dir}" do
 end
 
 template shell_script do
-  source "postgres-service.sh.erb"
-  mode "0700"
+  source 'postgres-service.sh.erb'
+  mode '0700'
   owner os_user
   group os_group
   notifies :reload, "service[#{service_name}]"
   variables(
-      "bin_dir"  => bin_dir,
-      "data_dir" => data_dir,
-      "log_file" => log_file
+      'bin_dir' => bin_dir,
+      'data_dir' => data_dir,
+      'log_file' => log_file
   )
 end
 
 template "#{data_dir}/pg_hba.conf" do
-  source "pg_hba.conf.erb"
+  source 'pg_hba.conf.erb'
   owner os_user
   group os_group
-  mode "0600"
+  mode '0600'
   notifies :reload, "service[#{service_name}]"
   variables('connections' => node['postgres']['connections'],
             'replication' => node['postgres']['replication']  )
@@ -116,29 +116,17 @@ if node['postgres']['listen_addresses'].empty?
 end
 
 if node['postgres']['listen_addresses'].empty?
-  raise "Can't find any listen_addresses to bind to"
+  raise 'Can\'t find any listen_addresses to bind to'
 end
 
 template "#{data_dir}/postgresql.conf" do
-  source "postgresql.conf.erb"
+  source 'postgresql.conf.erb'
   owner os_user
   group os_group
-  mode "0600"
+  mode '0600'
   notifies :reload, "service[#{service_name}]"
   variables config.to_hash.merge('listen_addresses' => node['postgres']['listen_addresses'])
 end
-
-
-#if config['replica']
-#  template "#{data_dir}/recovery.conf" do
-#    source "#{os}.recovery.conf.erb"
-#    owner os_user
-#    group os_group
-#    mode "0600"
-#    notifies :reload, "service[#{service_name}]"
-#    variables params
-#  end
-#end
 
 smf service_name do
   user os_user

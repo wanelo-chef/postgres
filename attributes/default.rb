@@ -1,21 +1,21 @@
 
-default['postgres']['user']                    = "postgres"
-default['postgres']['group']                   = "postgres"
-default['postgres']['service']                 = "postgres"
+default['postgres']['user']                    = 'postgres'
+default['postgres']['group']                   = 'postgres'
+default['postgres']['service']                 = 'postgres'
                                                # VERSION_ABBR is the major/minor version, ie 92 for 9.2.1
                                                # Patch version changes in PG are binary swappable
-default['postgres']['data_dir']                = "/var/pgsql/data%VERSION_ABBR%"
+default['postgres']['data_dir']                = '/var/pgsql/data%VERSION_ABBR%'
 # Do not use a globally-used directory such as /var/log, as ownership is changed
 # to allow writing by the postgres user
-default['postgres']['log_file']                = "/var/log/postgres-%VERSION%/stderr.log"
-default['postgres']['prefix_dir']              = "/opt/local/postgres-%VERSION%"
-default['postgres']['version']                 = "9.2.3"
-default['postgres']['remote_tar']              = "http://ftp.postgresql.org/pub/source/v%VERSION%/postgresql-%VERSION%.tar.gz"
+default['postgres']['log_file']                = '/var/log/postgres-%VERSION%/stderr.log'
+default['postgres']['prefix_dir']              = '/opt/local/postgres-%VERSION%'
+default['postgres']['version']                 = '9.2.3'
+default['postgres']['remote_tar']              = 'http://ftp.postgresql.org/pub/source/v%VERSION%/postgresql-%VERSION%.tar.gz'
 
-default['postgres']['config']['encoding']                   = "UTF8"
-default['postgres']['config']['locale']                     = "en_US.UTF-8"
+default['postgres']['config']['encoding']                   = 'UTF8'
+default['postgres']['config']['locale']                     = 'en_US.UTF-8'
 
-default['postgres']['config']['stats_temp_directory']       = "/tmp/pg_stats_temp_directory"
+default['postgres']['config']['stats_temp_directory']       = '/tmp/pg_stats_temp_directory'
 
 # shared_buffers_mb will be automatically set to 25% of available RAM, up to 8Gb
 # unless specified explicitly. cache size is auto-set to 70% of available RAM.
@@ -80,11 +80,11 @@ default['postgres']['config']['listen_port']             = 5432
 default['postgres']['listen_addresses']                  = []
 # On multi-homed default SmartOS installs, net0 will be a public IP and net1 will be a private IP
 # lo0 will be localhost
-default['postgres']['listen_interfaces']                 = ["net1", "lo0"]
+default['postgres']['listen_interfaces']                 = %w(net1 lo0)
 default['postgres']['connections']  = {
-    "127.0.0.1/0" => "trust"
+    '127.0.0.1/0' => 'trust'
 }
 default['postgres']['replication']  = {
-    "127.0.0.1/0" => "trust"
+    '127.0.0.1/0' => 'trust'
 }
 
