@@ -128,9 +128,15 @@ template "#{data_dir}/postgresql.conf" do
   variables config.to_hash.merge('listen_addresses' => node['postgres']['listen_addresses'])
 end
 
+resource_control_project 'postgres' do
+  comment 'PostgreSQL'
+  users os_user
+end
+
 smf service_name do
   user os_user
   group os_group
+  project 'postgres'
   start_command "#{shell_script} start"
   stop_command "#{shell_script} stop"
   refresh_command "#{shell_script} refresh"
