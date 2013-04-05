@@ -53,6 +53,8 @@ shell_script  = "/opt/local/share/smf/method/postgres-#{version}.sh"
 # create postgres user if not already there
 user os_user do
   comment 'PostgreSQL User'
+  home node['postgres']['home']
+  shell node['postgres']['user_shell']
   action :create
 end
 

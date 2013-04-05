@@ -2,6 +2,11 @@
 default['postgres']['user']                    = 'postgres'
 default['postgres']['group']                   = 'postgres'
 default['postgres']['service']                 = 'postgres'
+
+# These will only be set if the cookbook is the first to create the postgres user
+default['postgres']['home']                    = '/var/pgsql'
+default['postgres']['user_shell']              = '/usr/bin/pfksh'
+
                                                # VERSION_ABBR is the major/minor version, ie 92 for 9.2.1
                                                # Patch version changes in PG are binary swappable
 default['postgres']['data_dir']                = '/var/pgsql/data%VERSION_ABBR%'
