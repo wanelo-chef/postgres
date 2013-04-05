@@ -146,7 +146,6 @@ smf service_name do
   start_timeout 60
   stop_timeout 60
   refresh_timeout 60
-  environment "LD_LIBRARY_PATH" => "/opt/local/lib"
 end
 
 service service_name do

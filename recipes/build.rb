@@ -43,17 +43,19 @@ bash 'install postgres from source' do
     rm -rf #{src_dir}
     tar zxvf #{tarfile}
     cd #{src_dir}
-    export LD_LIBRARY_PATH=/opt/local/lib
-    export LDFLAGS="-lintl"
-    export CPPFLAGS="-lintl"
     ./configure --prefix=#{prefix_dir} --with-template=solaris \
         --enable-nls --without-perl --without-python  \
         --without-tcl --enable-dtrace --with-openssl  \
         --build=x86_64-sun-solaris2.11 --host=x86_64-sun-solaris2.11 \
         --with-libraries=/opt/local/lib --with-includes=/opt/local/include
-    cd #{src_dir} && make -j 12
-    cd #{src_dir} && make install
+    make -j 12
+    make install
   EOH
+
+  environment 'CFLAGS' => '-lintl',
+              'FFLAGS' => '-m64',
+              'LDFLAGS' => '-Wl,-R/opt/local/lib -L/opt/local/lib -lintl'
+
   not_if "ls -1 #{bin_dir}/postgres"
 end
 
