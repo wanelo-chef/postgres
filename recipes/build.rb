@@ -44,7 +44,8 @@ bash 'install postgres from source' do
     tar zxvf #{tarfile}
     cd #{src_dir}
     export LD_LIBRARY_PATH=/opt/local/lib
-    export LDFLAGS_EX="-lintl"
+    export LDFLAGS="-lintl"
+    export CPPFLAGS="-lintl"
     ./configure --prefix=#{prefix_dir} --with-template=solaris \
         --enable-nls --without-perl --without-python  \
         --without-tcl --enable-dtrace --with-openssl  \
