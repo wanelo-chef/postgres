@@ -39,11 +39,12 @@ node.default['postgres']['config']['effective_cache_size_mb'] = effective_cache_
 
 version       = node['postgres']['version']                # eg 9.2.1
 version_abbr  = version.split('.').slice(0..1).join        # eg 92
+version_num   = version.split('.').join                    # eg 921
 
 config        = node['postgres']['config']
 os_user       = node['postgres']['user']
 os_group      = node['postgres']['group']
-service_name  = node['postgres']['service']
+service_name  = node['postgres']['service'] + version_num  # eg postgres921
 data_dir      = node['postgres']['data_dir'].gsub(/%VERSION_ABBR%/, version_abbr)
 log_file      = node['postgres']['log_file'].gsub(/%VERSION%/, version)
 bin_dir       = node['postgres']['prefix_dir'].gsub(/%VERSION%/, version) + '/bin'
@@ -143,9 +144,11 @@ smf service_name do
   start_timeout 60
   stop_timeout 60
   refresh_timeout 60
+  environment "LD_LIBRARY_PATH" => "/opt/local/lib"
 end
 
 service service_name do
   supports :status => true, :restart => true, :reload => true
   action [ :enable, :start ]
+  not_if { system("ps -ef | grep '[p]ostgres -D'") || system("svcs -a | grep postgres | grep online")   }
 end
