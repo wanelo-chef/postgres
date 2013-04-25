@@ -14,8 +14,12 @@ default['postgres']['data_dir']                = '/var/pgsql/data%VERSION_ABBR%'
 # to allow writing by the postgres user
 default['postgres']['log_file']                = '/var/log/postgres-%VERSION%/stderr.log'
 default['postgres']['prefix_dir']              = '/opt/local/postgres-%VERSION%'
-default['postgres']['version']                 = '9.2.3'
+default['postgres']['version']                 = '9.2.4'
 default['postgres']['remote_tar']              = 'http://ftp.postgresql.org/pub/source/v%VERSION%/postgresql-%VERSION%.tar.gz'
+
+default['postgres']['client']['install_via']   = 'package'  # package or source
+default['postgres']['client']['version']       = '9.2.4'
+default['postgres']['client']['packages']      = %w(postgresql92-client)
 
 default['postgres']['config']['encoding']                   = 'UTF8'
 default['postgres']['config']['locale']                     = 'en_US.UTF-8'
