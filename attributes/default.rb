@@ -87,9 +87,10 @@ default['postgres']['config']['listen_port']             = 5432
 
 # User either list_addresses (array of IPs) or listen_interfaces, but not both.
 default['postgres']['listen_addresses']                  = []
-# On multi-homed default SmartOS installs, net0 will be a public IP and net1 will be a private IP
-# lo0 will be localhost
-default['postgres']['listen_interfaces']                 = %w(net1 lo0)
+# 'bind_privateaddress' finds the first RFC1918 address using the ipaddr_extensions gem
+default['postgres']['bind_privateaddress']               = true
+default['postgres']['bind_publicaddress']                = false
+
 default['postgres']['connections']  = {
     '127.0.0.1/0' => 'trust'
 }

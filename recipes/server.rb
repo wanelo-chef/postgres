@@ -18,12 +18,7 @@
 #
 
 
-# Used to determine what IP addresses to bind
-def listen_addr_for interface
-  interface_node = node['network']['interfaces'][interface]['addresses']
-  interface_node.select { |address, data| data['family'] == 'inet' }[0][0]
-end
-
+include_recipe 'ipaddr_extensions::default'
 include_recipe 'postgres::build'
 
 case node['platform']
@@ -112,15 +107,9 @@ template "#{data_dir}/pg_hba.conf" do
             'replication' => node['postgres']['replication']  )
 end
 
-if node['postgres']['listen_addresses'].empty?
-  node['postgres']['listen_interfaces'].each do |interface|
-    node.default['postgres']['listen_addresses'] << listen_addr_for(interface)
-  end
-end
-
-if node['postgres']['listen_addresses'].empty?
-  raise 'Can\'t find any listen_addresses to bind to'
-end
+node.default['postgres']['listen_addresses'] << '127.0.0.1'
+node.default['postgres']['listen_addresses'] << node['privateaddress'] if node['postgres']['bind_privateaddress']
+node.default['postgres']['listen_addresses'] << node['ipaddress'] if node['postgres']['bind_publicaddress']
 
 template "#{data_dir}/postgresql.conf" do
   source 'postgresql.conf.erb'
