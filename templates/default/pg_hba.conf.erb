@@ -82,5 +82,5 @@ host    all             all             ::1/128                    trust
 
 <%- @replication.each_pair do |subnet, method| %>
 host    replication     all             <%= subnet %>  <%= method %>
-#<% end %>
+<% end %>
 
