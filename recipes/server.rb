@@ -45,17 +45,7 @@ log_file      = node['postgres']['log_file'].gsub(/%VERSION%/, version)
 bin_dir       = node['postgres']['prefix_dir'].gsub(/%VERSION%/, version) + '/bin'
 shell_script  = "/opt/local/share/smf/method/postgres-#{version}.sh"
 
-# create postgres user if not already there
-user os_user do
-  comment 'PostgreSQL User'
-  home node['postgres']['home']
-  shell node['postgres']['user_shell']
-  action :create
-end
-
-group os_group do
-  action :create
-end
+include_recipe 'postgres::user'
 
 directory config['stats_temp_directory'] do
   owner os_user
