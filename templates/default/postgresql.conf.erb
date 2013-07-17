@@ -189,7 +189,7 @@ commit_siblings = <%= @commit_siblings %>
 # - Checkpoints -
 
 checkpoint_segments = <%= @checkpoint_segments %>                 # in logfile segments, min 1, 16MB each
-#checkpoint_timeout = 5min              # range 30s-1h
+checkpoint_timeout = <%= @checkpoint_timeout %>     # range 30s-1h
 checkpoint_completion_target = <%= @checkpoint_completion_target %>  # checkpoint target duration, 0.0 - 1.0
 #checkpoint_warning = 30s               # 0 disables
 

@@ -35,6 +35,7 @@ default['postgres']['config']['max_connections']            = 400
 
 default['postgres']['config']['checkpoint_segments']        = 64
 default['postgres']['config']['checkpoint_completion_target'] = 0.9
+default['postgres']['config']['checkpoint_timeout']         = '5min'
 
 # Change this to a larger value to keep more WAL logs. The number of segments defines
 # how far behind a replica can fall and then still catch up to the master. Each segment is 16Mb.
