@@ -87,6 +87,16 @@ template shell_script do
   )
 end
 
+template node['postgres']['config']['archive_script'] do
+  source 'pg_archive_wal_logs.erb'
+  owner os_user
+  group os_group
+  mode '0700'
+  variables(
+    'local_archive_script' => node['postgres']['config']['local_archive_script']
+  )
+end
+
 template "#{data_dir}/pg_hba.conf" do
   source 'pg_hba.conf.erb'
   owner os_user

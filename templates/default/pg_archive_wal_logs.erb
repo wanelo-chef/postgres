@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Dropped off by Chef. Changes will be overwritten.
+#
+# This script acts as a wrapper for a local wal archiving script.
+# If that script does not exist, this does nothing and wal logs are
+# not archived. Create a script that does real work at
+#    <%= @local_archive_script %>
+# to enable archiving, without having to do a full restart of PostgreSQL.
+#
+# This script should be run as the user that runs PostgreSQL.
+#
+
+export ARCHIVE_FILE_PATH=$1  # maps to %p in postgres archiving
+export ARCHIVE_FILE_NAME=$2  # maps to %f in postgres archiving
+
+if [ -f <%= @local_archive_script %> ]; then
+  . <%= @local_archive_script %>
+fi
