@@ -66,10 +66,14 @@ default['postgres']['config']['vacuum_freeze_min_age']     = '50000000'
 default['postgres']['config']['wal_buffers']       = '-1'     # set to 32MB for more buffering
 default['postgres']['config']['wal_writer_delay']  = '200ms'  # can be up to 32MB
 
-default['postgres']['config']['archive_mode']      = 'on'
-default['postgres']['config']['archive_script']   = '/opt/local/bin/pg_archive_wal_logs'
-default['postgres']['config']['archive_command']   = "#{node['postgres']['config']['archive_script']} %p %f"
+# Script created by Chef to wrap archive logic. You should not need to edit this.
+default['postgres']['config']['archive_script']    = '/opt/local/bin/pg_archive_wal_logs'
+# Script that you can write in order to enable archiving. WAL archiving is a noop if this script does not exist,
+# so you can change archive strategy without having to restart postgres.
 default['postgres']['config']['local_archive_script']  = '/opt/local/bin/pg_archive_wal_logs.local'
+
+default['postgres']['config']['archive_mode']      = 'on'
+default['postgres']['config']['archive_command']   = "#{node['postgres']['config']['archive_script']} %p %f"
 default['postgres']['config']['archive_timeout']   = 0
 
 # When off, there can be a delay between when success is reported to the client and when the transaction is really
