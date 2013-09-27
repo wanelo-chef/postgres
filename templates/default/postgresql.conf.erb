@@ -458,7 +458,7 @@ stats_temp_directory = '<%= @stats_temp_directory %>'
 # AUTOVACUUM PARAMETERS
 #------------------------------------------------------------------------------
 
-#autovacuum = on                        # Enable autovacuum subprocess?  'on'
+autovacuum = <%= @autovacuum_enabled ? 'on' : 'off' %>                         # Enable autovacuum subprocess?  'on'
                                         # requires track_counts to also be on.
 #log_autovacuum_min_duration = -1       # -1 disables, 0 logs all actions and
                                         # their durations, > 0 logs only
