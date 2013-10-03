@@ -79,9 +79,15 @@ default['postgres']['config']['archive_mode']      = 'on'
 default['postgres']['config']['archive_command']   = "#{node['postgres']['config']['archive_script']} %p %f"
 default['postgres']['config']['archive_timeout']   = 0
 
+default['postgres']['config']['bgwriter_lru_maxpages'] = 100
+
+default['postgres']['config']['fsync_enabled'] = true
+
 # When off, there can be a delay between when success is reported to the client and when the transaction is really
 # guaranteed to be safe against a server crash. (The maximum delay is three times wal_writer_delay.)
 default['postgres']['config']['synchronous_commit'] = 'on'
+
+default['postgres']['config']['full_page_writes_enabled'] = true
 
 # A nonzero delay can allow more transactions to be committed with only one flush operation, if system load is high enough
 # that additional transactions become ready to commit within the given interval. But the delay is just wasted if no

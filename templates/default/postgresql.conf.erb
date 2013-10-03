@@ -146,7 +146,7 @@ shared_preload_libraries = '$libdir/pg_stat_statements'          # (change requi
 # - Background Writer -
 
 #bgwriter_delay = 200ms                 # 10-10000ms between rounds
-#bgwriter_lru_maxpages = 100            # 0-1000 max buffers written/round
+bgwriter_lru_maxpages = <%= @bgwriter_lru_maxpages %> # 0-1000 max buffers written/round
 #bgwriter_lru_multiplier = 2.0          # 0-10.0 multipler on buffers scanned/round
 
 # - Asynchronous Behavior -
@@ -162,7 +162,7 @@ shared_preload_libraries = '$libdir/pg_stat_statements'          # (change requi
 
 wal_level = hot_standby                 # minimal, archive, or hot_standby
                                         # (change requires restart)
-#fsync = on                             # turns forced synchronization on or off
+fsync = <%= @fsync_enabled ? 'on' : 'off' %> # turns forced synchronization on or off
 synchronous_commit = <%= @synchronous_commit %> # synchronization level;
                                         # off, local, remote_write, or on
 #wal_sync_method = fsync                # the default is the first option
@@ -172,7 +172,7 @@ synchronous_commit = <%= @synchronous_commit %> # synchronization level;
                                         #   fsync
                                         #   fsync_writethrough
                                         #   open_sync
-#full_page_writes = on                  # recover from partial page writes
+full_page_writes = <%= @full_page_writes_enabled ? 'on' : 'off' %> # recover from partial page writes
 
 # min 32kB, -1 sets based on shared_buffers (change requires restart)
 wal_buffers = <%= @wal_buffers %>
