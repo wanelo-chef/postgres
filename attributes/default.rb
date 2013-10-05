@@ -63,6 +63,7 @@ default['postgres']['config']['autovacuum_analyze_scale_factor'] = '0.1'  # defa
 
 default['postgres']['config']['autovacuum_freeze_max_age'] = '200000000' # # maximum XID age before forced vacuum (change requires restart)
 default['postgres']['config']['vacuum_freeze_min_age']     = '50000000'
+default['postgres']['config']['autovacuum_naptime']     = '1min'
 
 # async writes settings
 # ---------------------------------------------------------------------------------------------------------------------
@@ -82,6 +83,7 @@ default['postgres']['config']['archive_timeout']   = 0
 default['postgres']['config']['bgwriter_lru_maxpages'] = 100
 
 default['postgres']['config']['fsync_enabled'] = true
+default['postgres']['config']['wal_sync_method'] = 'fsync'
 
 # When off, there can be a delay between when success is reported to the client and when the transaction is really
 # guaranteed to be safe against a server crash. (The maximum delay is three times wal_writer_delay.)

@@ -165,7 +165,7 @@ wal_level = hot_standby                 # minimal, archive, or hot_standby
 fsync = <%= @fsync_enabled ? 'on' : 'off' %> # turns forced synchronization on or off
 synchronous_commit = <%= @synchronous_commit %> # synchronization level;
                                         # off, local, remote_write, or on
-#wal_sync_method = fsync                # the default is the first option
+wal_sync_method = <%= @wal_sync_method %> # the default is the first option
                                         # supported by the operating system:
                                         #   open_datasync
                                         #   fdatasync (default on Linux)
@@ -466,7 +466,7 @@ autovacuum = <%= @autovacuum_enabled ? 'on' : 'off' %>                         #
                                         # of milliseconds.
 autovacuum_max_workers = 3              # max number of autovacuum subprocesses
                                         # (change requires restart)
-#autovacuum_naptime = 1min              # time between autovacuum runs
+autovacuum_naptime = <%= @autovacuum_naptime %> # time between autovacuum runs
 #autovacuum_vacuum_threshold = 50       # min number of row updates before
                                         # vacuum
 #autovacuum_analyze_threshold = 50      # min number of row updates before
