@@ -83,7 +83,8 @@ template shell_script do
   variables(
       'bin_dir' => bin_dir,
       'data_dir' => data_dir,
-      'log_file' => log_file
+      'log_file' => log_file,
+      'stats_dir' => node['postgres']['config']['stats_temp_directory']
   )
 end
 

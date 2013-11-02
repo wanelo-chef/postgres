@@ -37,6 +37,7 @@ fi
 case "$1" in
 'start')
      ulimit -n 10240
+     mkdir -p <%= @stats_dir %>
      $PGBIN/pg_ctl -D $PGDATA -l $PGLOG start
      ;;
 
