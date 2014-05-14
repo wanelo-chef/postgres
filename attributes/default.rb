@@ -60,6 +60,9 @@ default['postgres']['config']['autovacuum_enabled']  = true  # boolean
 # or keep them at defaults otherwise.
 default['postgres']['config']['autovacuum_vacuum_scale_factor']  = '0.2'  # default is 0.2, 20% of table
 default['postgres']['config']['autovacuum_analyze_scale_factor'] = '0.1'  # default is 0.1, 10% of table
+default['postgres']['config']['autovacuum_max_workers'] = 3
+default['postgres']['config']['autovacuum_vacuum_cost_delay'] = '20ms'
+default['postgres']['config']['autovacuum_vacuum_cost_limit'] = '-1'
 
 default['postgres']['config']['autovacuum_freeze_max_age'] = '200000000' # # maximum XID age before forced vacuum (change requires restart)
 default['postgres']['config']['vacuum_freeze_min_age']     = '50000000'
