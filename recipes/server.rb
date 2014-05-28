@@ -19,6 +19,7 @@
 
 
 include_recipe 'ipaddr_extensions::default'
+include_recipe 'paths::default'
 include_recipe 'postgres::build'
 
 case node['platform']
@@ -136,6 +137,7 @@ smf service_name do
   start_timeout 60
   stop_timeout 60
   refresh_timeout 60
+  environment 'PATH' => node['paths']['bin_path']
 end
 
 service service_name do
