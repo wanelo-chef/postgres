@@ -71,9 +71,9 @@ default['postgres']['config']['log_destination']               = 'stderr'
 # suggested prefix for pgfouine compatibility (not yet verified)
 default['postgres']['config']['log_line_prefix']              = ''
 
-# Replication
-# Setting this to 'on' allows standby replicas to run read only queries
+# Settings for replicas
 default['postgres']['config']['max_standby_streaming_delay']  = '30s'
+default['postgres']['config']['hot_standby_feedback_enabled']  = true
 
 
 default['postgres']['config']['listen_port']                  = 5432

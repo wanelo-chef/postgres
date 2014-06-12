@@ -103,9 +103,9 @@ default['postgres']['config']['commit_siblings']    = 5
 # ---------------------------------------------------------------------------------------------------------------------
 
 
-# Replication
-# Setting this to 'on' allows standby replicas to run read only queries
+# Settings for the replicas
 default['postgres']['config']['max_standby_streaming_delay']   = '30s'
+default['postgres']['config']['hot_standby_feedback_enabled']  = true
 
 
 default['postgres']['config']['listen_port']             = 5432
