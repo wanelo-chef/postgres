@@ -8,9 +8,9 @@ version          '2.11.0'
 
 supports 'smartos'
 
+depends 'build-essential'
 depends 'ipaddr_extensions'
 depends 'paths'
 depends 'rbac'
 depends 'resource-control'
 depends 'smf', '>= 2.0.1'
-depends 'build-essential'
