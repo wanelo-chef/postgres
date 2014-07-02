@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 
+include_recipe 'build-essential'
 
 version     = node['postgres']['version']
 prefix_dir  = node['postgres']['prefix_dir'].gsub(/%VERSION%/, version)
