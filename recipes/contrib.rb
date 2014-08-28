@@ -72,3 +72,11 @@ execute 'install pg_stat_statements' do
   command 'make && make install'
   not_if { File.exists?("#{prefix_dir}/lib/pg_stat_statements.so") }
 end
+
+# hstore
+
+execute 'install hstore' do
+  cwd "#{src_dir}/hstore"
+  command 'make && make install'
+  not_if { File.exists?("#{prefix_dir}/lib/hstore.so") }
+end
