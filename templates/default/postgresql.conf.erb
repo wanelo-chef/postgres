@@ -498,7 +498,14 @@ autovacuum_vacuum_cost_limit = <%= @autovacuum_vacuum_cost_limit %>       # defa
 #default_transaction_read_only = off
 #default_transaction_deferrable = off
 #session_replication_role = 'origin'
+<% if @statement_timeout %>
+statement_timeout = <%= @statement_timeout %> # in milliseconds
+<% else %>
 #statement_timeout = 0                  # in milliseconds, 0 is disabled
+<% end %>
+<% if @lock_timeout %>
+lock_timeout = <%= @lock_timeout %> # in milliseconds
+<% end %>
 vacuum_freeze_min_age = <%= @vacuum_freeze_min_age %>
 vacuum_freeze_table_age = 500000000
 #bytea_output = 'hex'                   # hex, escape

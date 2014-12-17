@@ -53,6 +53,10 @@ default['postgres']['config']['log_destination']         = 'stderr'
 # suggested prefix for pgfouine compatibility (not yet verified)
 default['postgres']['config']['log_line_prefix']         = ''
 
+# Timeouts (nil to disable, or an integer in milliseconds)
+default['postgres']['config']['statement_timeout'] = nil
+default['postgres']['config']['lock_timeout'] = nil
+
 # autovacuum settings
 # ---------------------------------------------------------------------------------------------------------------------
 default['postgres']['config']['autovacuum_enabled']  = true  # boolean
