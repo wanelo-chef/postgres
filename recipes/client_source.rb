@@ -31,3 +31,9 @@ pg_basedir = node['postgres']['prefix_dir'].gsub(/%VERSION%/, node['postgres']['
   end
 
 end
+
+%w( libpq.a libpq.so libpq.so.5 libpq.so.5.6 ).each do |lib|
+  link "/opt/local/lib/#{lib}" do
+    to "#{pg_basedir}/lib/#{lib}"
+  end
+end
