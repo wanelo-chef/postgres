@@ -26,7 +26,6 @@ case node['platform']
   when 'smartos'
     available_ram = `prtconf -m`.chomp.to_i
   when 'linux'
-    # this has not been tested on a real system. If it works please report.
     free_bytes = `free | grep Mem | awk '{print $2}'`.chomp.to_i  # in Kb
     available_ram = free_bytes / 1024 # in Mb
 end
