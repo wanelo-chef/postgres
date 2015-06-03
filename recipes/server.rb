@@ -25,6 +25,9 @@ include_recipe 'postgres::build'
 case node['platform']
   when 'smartos'
     available_ram = `prtconf -m`.chomp.to_i
+  when 'linux'
+    free_bytes = `free | grep Mem | awk '{print $2}'`.chomp.to_i  # in Kb
+    available_ram = free_bytes / 1024 # in Mb
 end
 
 shared_buffers_mb       = [12000, (available_ram * 0.25).to_i].min
