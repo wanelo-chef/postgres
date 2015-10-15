@@ -7,6 +7,8 @@ default['postgres']['service']                 = 'postgres'
 default['postgres']['home']                    = '/var/pgsql'
 default['postgres']['user_shell']              = '/usr/bin/pfksh'
 
+default['postgres']['start_service']           = true
+
                                                # VERSION_ABBR is the major/minor version, ie 92 for 9.2.1
                                                # Patch version changes in PG are binary swappable
 default['postgres']['data_dir']                = '/var/pgsql/data%VERSION_ABBR%'

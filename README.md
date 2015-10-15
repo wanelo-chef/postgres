@@ -3,7 +3,7 @@ Postgres
 
 ## Description
 
-This cookbook is meant to build from sources PostgreSQL 9.2.+ 
+This cookbook is meant to build from sources PostgreSQL 9.2+
 and install it into /opt/local/postgresql-VERSION folder.  It
 supports multiple co-existing installations of PostgreSQL, and 
 sets up the data directory based on major/minor versions of PG 
@@ -17,7 +17,7 @@ wal_segments may need to be increased depending on the write load.
 
 ## Requirements
 
-Joyent SmartOS base64 1.8.1, but might work on others.
+* Joyent SmartOS
 
 ##Attributes
 
@@ -25,6 +25,9 @@ Joyent SmartOS base64 1.8.1, but might work on others.
 default['postgres']['user']                    = "postgres"
 default['postgres']['group']                   = "postgres"
 default['postgres']['service']                 = "postgres"
+
+# Start Postgres service on installation
+default['postgres']['start_service']           = true
 
                                                # VERSION_ABBR is the major/minor version, ie 92 for 9.2.1
                                                # Patch version changes in PG are binary swappable
