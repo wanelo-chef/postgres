@@ -17,10 +17,10 @@
 # limitations under the License.
 #
 
-
 include_recipe 'ipaddr_extensions::default'
 include_recipe 'paths::default'
 include_recipe 'postgres::build'
+include_recipe 'smf'
 
 case node['platform']
   when 'smartos'
