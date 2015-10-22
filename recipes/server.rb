@@ -61,21 +61,15 @@ directory '/opt/local/share/smf/method' do
   action :create
 end
 
-directory File.dirname(data_dir) do
-  recursive true
-  owner os_user
-end
-
 directory File.dirname(log_file) do
   recursive true
   owner os_user
   group os_group
 end
 
-execute "running initdb for data dir #{data_dir}" do
-  command "#{bin_dir}/initdb -D #{data_dir} -E '#{config['encoding']}' --locale='#{config['locale']}'"
-  user os_user
-  not_if { File.exists?(data_dir)}
+postgres_initdb "initialize db for postgres #{version}" do
+  version version
+  action :init
 end
 
 template shell_script do
