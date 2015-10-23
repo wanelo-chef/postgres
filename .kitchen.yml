@@ -16,7 +16,7 @@ platforms:
     zone:
       name: base64
       brand: joyent
-      image: 5c7d0d24-3475-11e5-8e67-27953a8b237e
+      image: 842e6fa6-6e9b-11e5-8402-1b490459e334
   provisioner:
     chef_omnibus_url: https://raw.githubusercontent.com/wanelo-chef/chef-bootstrap/master/standalone.sh
 
