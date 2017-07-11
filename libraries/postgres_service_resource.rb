@@ -91,7 +91,7 @@ class Chef
         case node['platform']
           when 'smartos'
             shell_out!('prtconf -m').stdout.chomp.to_i
-          when 'linux'
+          when 'linux', 'oracle'
             shell_out!("free | grep Mem | awk '{print $2}'").stdout.chomp.to_i / 1024
         end
       end
